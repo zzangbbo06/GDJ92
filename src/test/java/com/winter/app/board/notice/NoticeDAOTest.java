@@ -15,11 +15,11 @@ class NoticeDAOTest {
 	
 	@Test
 	void test() throws Exception {
-//		NoticeVO noticeVO = new NoticeVO();
-//		noticeVO.setBoardTitle("title3");
-//		noticeVO.setBoardContents("contents3");
-//		noticeVO.setBoardWriter("writer3");
-//		noticeDAO.insert(noticeVO);
+		NoticeVO noticeVO = new NoticeVO();
+		noticeVO.setBoardTitle("title3");
+		noticeVO.setBoardContents("contents3");
+		noticeVO.setBoardWriter("writer3");
+		int result = noticeDAO.insert(noticeVO);
 		
 		// 단정문
 		
@@ -31,11 +31,11 @@ class NoticeDAOTest {
 //		noticeUpdateVO.setBoardWriter("writer6");
 //		int result1 = noticeDAO.update(noticeUpdateVO);
 		
-		NoticeVO noticeDeleteVO = new NoticeVO();
-		long boardNum = 3L;
-		int result2 = noticeDAO.delete(boardNum);
+//		NoticeVO noticeDeleteVO = new NoticeVO();
+//		long boardNum = 3L;
+//		int result2 = noticeDAO.delete(boardNum);
 		
-		assertEquals(1,result2);
+		assertEquals(1,result);
 	}
 
 }
