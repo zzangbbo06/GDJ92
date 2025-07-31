@@ -20,7 +20,12 @@
 				<c:import url="/WEB-INF/views/include/topbar.jsp"></c:import>
 				<div class="container-fluid">
 					<!-- page contents 내용 -->
-					<h1>Index</h1>
+					<div class="card w-75 mb-3 offset-md-2">
+						<div class="card-body">
+						<h5 class="card-title">${detail.boardTitle }</h5>
+    					<p class="card-text">${detail.boardContents }</p>
+    					</div>
+					</div>
 				</div>
 			</div>
 			<!-- End Content -->

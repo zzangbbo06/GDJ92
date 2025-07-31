@@ -20,7 +20,33 @@
 				<c:import url="/WEB-INF/views/include/topbar.jsp"></c:import>
 				<div class="container-fluid">
 					<!-- page contents 내용 -->
-					<h1>Index</h1>
+					<div class = "row col-md-8 offset-md-2">
+					<!-- 부트스트랩은 12칸을 차지함 -->
+						<table class="table table-dark table-striped">
+							<thead>
+								<tr>
+									<th>Num</th>
+									<th>Title</th>
+									<th>Writer</th>
+									<th>Date</th>
+									<th>Hit</th>
+								</tr>
+							</thead>
+							<tbody>
+							<c:forEach items="${list }" var="vo">
+							
+								<tr>
+									<td>${vo.boardNum }</td>
+									<td><a href="./detail?boardNum=${vo.boardNum }">${vo.boardTitle }</a></td>
+									<!-- 받으려는 setter의 이름과 같게 -->
+									<td>${vo.boardWriter }</td>
+									<td>${vo.boardDate }</td>
+									<td>${vo.boardHit }</td>
+								</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 			<!-- End Content -->
