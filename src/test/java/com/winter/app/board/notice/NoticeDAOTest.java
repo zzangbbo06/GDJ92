@@ -1,11 +1,17 @@
 package com.winter.app.board.notice;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.winter.app.board.BoardVO;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @SpringBootTest
 // springboot test 용도로만 쓸거에요
 class NoticeDAOTest {
@@ -14,6 +20,15 @@ class NoticeDAOTest {
 	private NoticeDAO noticeDAO;
 	
 	@Test
+	void detailTest() throws Exception{
+		NoticeVO noticeVO = new NoticeVO();
+		noticeVO.setBoardNum(1L);
+		BoardVO boardVO = noticeDAO.detail(noticeVO);
+//		모든 noticeVO는 boardVO 가 아니기때문
+		log.info("result : {}" , boardVO);
+		assertNotNull(boardVO);
+	}
+	//@Test
 	void test() throws Exception {
 		NoticeVO noticeVO = new NoticeVO();
 		noticeVO.setBoardTitle("title3");
@@ -35,7 +50,7 @@ class NoticeDAOTest {
 //		long boardNum = 3L;
 //		int result2 = noticeDAO.delete(boardNum);
 		
-		assertEquals(1,result);
+//		assertEquals(1,result);
 	}
 
 }

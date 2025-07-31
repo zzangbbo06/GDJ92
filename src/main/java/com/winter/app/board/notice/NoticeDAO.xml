@@ -7,6 +7,13 @@
 <mapper namespace="com.winter.app.board.notice.NoticeDAO">
 	<!-- ID는 DAO의 메서드명과 동일하게 작성 -->
 	
+	<select id="detail" parameterType="NoticeVO" resultType="NoticeVO">
+		SELECT *
+		FROM NOTICE
+		WHERE BOARD_NUM=#{boardNum}
+		<!-- #{} 여기에 들어갈 parameterType을 적어라 -->
+	</select>
+	
 	<insert id="insert" parameterType="NoticeVO">
 		INSERT INTO NOTICE(BOARD_NUM, BOARD_TITLE, BOARD_CONTENTS, BOARD_WRITER, BOARD_DATE, BOARD_HIT)
 		VALUES
