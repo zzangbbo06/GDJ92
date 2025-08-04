@@ -34,10 +34,13 @@
 		WHERE P.PRODUCT_NUM=#{productNum}
 	</select>
 	
-	<insert id="add" parameterType="ProductVO">
-		INSERT INTO PRODUCTS
-		VALUES(NULL, #{productName}, #{productContents}, now(), #{productRate}, #{kindNum})
-	</insert>
+	
+		<insert id="add" parameterType="ProductVO">
+			INSERT INTO PRODUCTS
+			(PRODUCT_NUM, PRODUCT_NAME, PRODUCT_CONTENTS, PRODUCT_DATE, PRODUCT_RATE, KIND_NUM)
+			VALUES (NULL, #{productName}, #{productContents}, NOW(), #{productRate}, #{kindNum})
+		</insert>
+	
 	
 	<update id="update" parameterType="ProductVO">
 		UPDATE PRODUCTS
@@ -49,5 +52,9 @@
 			WHERE PRODUCT_NUM = #{productNum}
 	</update>
 	
+	<delete id="delete" parameterType="ProductVO">
+		DELETE FROM PRODUCTS
+		WHERE PRODUCT_NUM = #{productNum}
+	</delete>
 	
 </mapper>

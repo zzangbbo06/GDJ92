@@ -50,7 +50,7 @@ public class ProductController {
 		return "products/product_form";
 	}
 	@PostMapping("update")
-	public String update1(ProductVO productVO, Model model) throws Exception{
+	public String updatePost(ProductVO productVO, Model model) throws Exception{
 		int result = productService.update(productVO);
 		
 		String msg = "수정 실패";
@@ -63,5 +63,10 @@ public class ProductController {
 		model.addAttribute("url",url);
 		model.addAttribute("msg",msg);
 		return "commons/result";
+	}
+	@PostMapping("delete")
+	public String delete(ProductVO productVO) throws Exception{
+		productService.delete(productVO);
+		return "redirect:/products/list";
 	}
 }

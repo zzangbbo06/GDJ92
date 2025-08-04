@@ -24,7 +24,7 @@
 					<div class="card">
 					  <h5 class="card-header">글작성</h5>
 					  <div class="card-body">
-					  	<form action="${not empty detail.productNum ? '/products/update' : '/products/add'}" method="post">
+					  	<form action="${detail != null ? '/products/update' : '/products/add'}" method="post">
 					  	<input type="hidden" name="productNum" value="${detail.productNum }">
 					      <label for="productName">상품이름</label>
 						  <input type="text" id="productName" name="productName" class="form-control" required value="${detail.productName }"/>
@@ -37,19 +37,14 @@
 						  <br>
 						  <label for="kindNum">상품종류:</label>
 							<select name="kindNum" id="kindNum">
-							  <option value="1">예금</option>
-							  <option value="2">적금</option>
-							  <option value="3">대출</option>
+							  <option value="1" <c:if test="${detail.kindNum eq '1'}">selected</c:if>>예금</option>
+								<option value="2" <c:if test="${detail.kindNum eq '2'}">selected</c:if>>적금</option>
+								<option value="3" <c:if test="${detail.kindNum eq '3'}">selected</c:if>>대출</option>
 							</select>
 						  <!-- name은 VO의 setter의 이름과 동일하게 만들어주기 -->
-						  <c:choose>
-						  	<c:when test="${not empty detail.productNum }">
-							  <button type="submit" class="btn btn-primary">수정</button>					  	
-						  	</c:when>
-							<c:otherwise>
-							  <button type="submit" class="btn btn-primary">등록</button>					  	
-							</c:otherwise>							  
-						  </c:choose>
+						  <button type="submit" class="btn btn-primary">
+						    ${detail != null ? '수정' : '등록'}
+						  </button>
 						 </form>
 					  </div>
 					</div>

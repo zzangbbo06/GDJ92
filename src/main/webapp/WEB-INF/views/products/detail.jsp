@@ -29,11 +29,10 @@
     					<h2>KindName: ${detail.productKindVO.kindName }</h2>
     					<div>
     						<form id="frm">
-    							<input type="hidden" name="productNum" value="${detail.productNum}">
-    							<button class="btn btn-success action" data-kind="u">Update</button>
-    							<button class="btn btn-dark action" data-kind="d">Delete</button>
-    						</form>
-    						
+							  <input type="hidden" name="productNum" value="${detail.productNum}">
+							  <button type="button" class="btn btn-success action" data-kind="u">Update</button>
+							  <button type="button" class="btn btn-dark action" data-kind="d">Delete</button>
+							</form>
     					</div>
     					</div>
 					</div>
@@ -43,6 +42,7 @@
 		<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
 		</div>
 	</div>
+	<script src="/js/product/product_detail.js"></script>
 	<c:import url="/WEB-INF/views/include/tail.jsp"></c:import>
 </body>
 </html>
