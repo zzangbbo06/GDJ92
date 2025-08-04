@@ -46,6 +46,9 @@
 								</c:forEach>
 							</tbody>
 						</table>
+						<div>
+						<a href="./add" class="btn btn-outline-danger">글쓰기</a>
+						</div>
 					</div>
 				</div>
 			</div>

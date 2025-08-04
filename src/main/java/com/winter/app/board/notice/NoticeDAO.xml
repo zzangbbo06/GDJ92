@@ -7,6 +7,12 @@
 <mapper namespace="com.winter.app.board.notice.NoticeDAO">
 	<!-- ID는 DAO의 메서드명과 동일하게 작성 -->
 	
+	<!-- <insert id="add" parameterType="NoticeVO">
+		INSERT INTO NOTICE(BOARD_TITLE, BOARD_CONTENTS,BOARD_WRITER, BOARD_DATE, BOARD_HIT)
+		VALUES(#{boardTitle}, #{boardContents}, #{boardWriter}, now(), 0)
+	</insert> -->
+	
+	
 	<select id="list" resultType="NoticeVO">
 		SELECT *
 		FROM NOTICE
@@ -35,7 +41,7 @@
 		WHERE BOARD_NUM = #{boardNum}	
 	</update>
 	
-	<delete id="delete" parameterType="long">
+	<delete id="delete" parameterType="NoticeVO">
 		DELETE FROM NOTICE
 		WHERE BOARD_NUM = #{boardNum}
 	</delete>

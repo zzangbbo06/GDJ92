@@ -21,8 +21,34 @@ public class NoticeService implements BoardService{
 		return noticeDAO.list();
 	}
 	
-	public BoardVO detail(NoticeVO noticeVO) throws Exception{
+	public BoardVO detail(BoardVO noticeVO) throws Exception{
 		return noticeDAO.detail(noticeVO);
 	}
+
+	/*
+	 * @Override public int add(BoardVO boardVO) throws Exception {
+	 * 
+	 * return noticeDAO.add(boardVO); }
+	 */
+
+	@Override
+	public int insert(BoardVO boardVO) throws Exception {
+		return noticeDAO.insert(boardVO);
+	}
+	
+
+	@Override
+	public int delete(BoardVO boardVO) throws Exception {
+		return noticeDAO.delete(boardVO);
+	}
+
+	@Override
+	public int update(BoardVO boardVO) throws Exception {
+		return noticeDAO.update(boardVO);
+	}
+
+	
+	
+	
 
 }

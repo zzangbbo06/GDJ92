@@ -20,21 +20,23 @@
 				<c:import url="/WEB-INF/views/include/topbar.jsp"></c:import>
 				<div class="container-fluid">
 					<!-- page contents 내용 -->
-					<h1>Detail Page</h1>
-					<div class="card w-75 mb-3 offset-md-2">
-						<div class="card-body">
-						<h5 class="card-title">${detail.boardTitle }</h5>
-    					<p class="card-text">${detail.boardContents }</p>
-    					
-    					<div>
-    						<form id="frm">
-    							<input type="hidden" name="boardNum" value="${detail.boardNum}">
-    						</form>
-    						
-    						<button class="btn btn-success action" data-kind="u">Update</button>
-    						<button class="btn btn-dark action" data-kind="d">Delete</button>
-    					</div>
-    					</div>
+					<h1>Update Page</h1>
+					<div class="card">
+					  <h5 class="card-header">글작성</h5>
+					  <div class="card-body">
+					  	<form method="post">
+					 	  <label for="noticeWriter">작성자</label>
+						  <input type="text" id="boardWriter" name="boardWriter" class="form-control" required />
+						  <!-- name은 VO의 setter의 이름과 동일하게 만들어주기 -->
+					      <label for="noticeTitle">제목</label>
+						  <input type="text" id="boardTitle" name="boardTitle" class="form-control" required />
+						  <br>
+						  <label for="noticeContents">내용</label>
+						  <textarea id="boardContents" name="boardContents" required class="form-control"></textarea>
+						  <br>
+						  <button type="submit" class="btn btn-primary">수정</button>
+						 </form>
+					  </div>
 					</div>
 				</div>
 			</div>
@@ -43,6 +45,5 @@
 		</div>
 	</div>
 	<c:import url="/WEB-INF/views/include/tail.jsp"></c:import>
-	<script type="text/javascript" src="/js/board/board_detail.js"></script>
 </body>
 </html>
