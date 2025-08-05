@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <!-- namespace의 이름은 사용하려는 DAO의 풀패키지명과 동일하게 작성 -->
+<mapper namespace="com.winter.app.board.qna.QnaDAO">
+	<!-- ID는 DAO의 메서드명과 동일하게 작성 -->
+	
+	<select id="list" resultType="QnaVO">
+		SELECT *
+		FROM QnA
+		ORDER BY BOARD_REF DESC, BOARD_STEP ASC	
+	</select>
+	
+	<select id="detail" parameterType="QnaVO" resultType="QnaVO">
+		SELECT *
+		FROM QnA
+		WHERE BOARD_NUM=#{boardNum}
+		<!-- #{} 여기에 들어갈 parameterType을 적어라 -->
+	</select>
+	
+	<insert id="insert" parameterType="QnaVO" useGeneratedKeys="true" keyProperty="boardNum">
+	<!-- autoincrement된 값을 boardNum값에 set을  -->
+		INSERT INTO QnA(BOARD_NUM, BOARD_TITLE, BOARD_CONTENTS, BOARD_WRITER, BOARD_DATE, BOARD_HIT, BOARD_REF, BOARD_STEP, BOARD_DEPTH)
+		VALUES
+		(NULL, #{boardTitle}, #{boardContents}, #{boardWriter}, now(), 0, #{boardRef}, #{boardStep}, #{boardDepth})
+	</insert>
+
+	<update id="refUpdate" parameterType="QnaVO">
+		UPDATE QnA SET BOARD_REF=#{boardNum} WHERE BOARD_NUM=#{boardNum}
+	</update>
+	
+	<update id="replyUpdate" parameterType="QnaVO">
+		UPDATE QnA SET BOARD_STEP=BOARD_STEP+1
+		WHERE BOARD_REF=#{boardRef} AND BOARD_STEP > #{boardStep}		
+	</update>
+
+
+	<update id="update" parameterType="QnaVO">
+		UPDATE NOTICE
+		SET
+			BOARD_TITLE = #{boardTitle},
+			BOARD_CONTENTS = #{boardContents},
+			BOARD_WRITER = #{boardWriter}
+		WHERE BOARD_NUM = #{boardNum}	
+	</update>
+	
+	<delete id="delete" parameterType="long">
+		DELETE FROM NOTICE
+		WHERE BOARD_NUM = #{boardNum}
+	</delete>
+
+</mapper>

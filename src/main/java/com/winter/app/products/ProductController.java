@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 
 
@@ -47,10 +48,12 @@ public class ProductController {
 	public String update(ProductVO productVO, Model model) throws Exception{
 		ProductVO detail = productService.detail(productVO);
 		model.addAttribute("detail", detail);
+		// model and view 객체에 담김
 		return "products/product_form";
+		// view 객체에 담기는것임
 	}
 	@PostMapping("update")
-	public String updatePost(ProductVO productVO, Model model) throws Exception{
+	public ModelAndView updatePost(ProductVO productVO, ModelAndView mv) throws Exception{
 		int result = productService.update(productVO);
 		
 		String msg = "수정 실패";
@@ -60,9 +63,19 @@ public class ProductController {
 		}
 		
 		String url="./detail?productNum="+productVO.getProductNum();
-		model.addAttribute("url",url);
-		model.addAttribute("msg",msg);
-		return "commons/result";
+		
+		
+//		ModelAndView mv = new ModelAndView();
+		mv.addObject("msg", msg);
+		mv.addObject("url", url);
+		mv.setViewName("commons/result");
+		return mv;
+		
+		
+//		model.addAttribute("url",url);		
+//		model.addAttribute("msg",msg);
+//		return "commons/result";
+		
 	}
 	@PostMapping("delete")
 	public String delete(ProductVO productVO) throws Exception{

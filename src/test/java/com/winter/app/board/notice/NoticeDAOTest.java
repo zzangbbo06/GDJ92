@@ -43,14 +43,18 @@ class NoticeDAOTest {
 	}
 	//@Test
 	void test() throws Exception {
+		for(int i=0; i<105; i++) {
 		NoticeVO noticeVO = new NoticeVO();
 		noticeVO.setBoardTitle("title3");
 		noticeVO.setBoardContents("contents3");
 		noticeVO.setBoardWriter("writer3");
 		int result = noticeDAO.insert(noticeVO);
-		
+		if(i%10 ==0) {
+			Thread.sleep(500);
+		}
+		assertEquals(0,result);
+		}
 		// 단정문
-		
 		
 //		NoticeVO noticeUpdateVO = new NoticeVO();
 //		noticeUpdateVO.setBoardNum(6L);

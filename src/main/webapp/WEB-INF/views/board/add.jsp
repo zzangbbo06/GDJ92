@@ -24,7 +24,7 @@
 					<div class="card">
 					  <h5 class="card-header">글작성</h5>
 					  <div class="card-body">
-					  	<form action="${not empty vo.boardNum ? '/notice/update' : '/notice/add'}" method="post">
+					  	<form method="post">
 					  	<input type="hidden" name="boardNum" value="${vo.boardNum }">
 					 	  <label for="noticeWriter">작성자</label>
 						  <input type="text" id="boardWriter" name="boardWriter" class="form-control" required value="${vo.boardWriter }"/>

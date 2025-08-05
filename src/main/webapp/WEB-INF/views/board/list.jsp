@@ -20,20 +20,40 @@
 				<c:import url="/WEB-INF/views/include/topbar.jsp"></c:import>
 				<div class="container-fluid">
 					<!-- page contents 내용 -->
-					<div class="card w-75 mb-3 offset-md-2">
-						<div class="card-body">
-						<h5 class="card-title">Name: ${detail.boardName }</h5>
-    					<p class="card-text">Contents: ${detail.boardContents }</p>
-    					<p>Ref: ${detail.boardRef }</p>
-    					<div>
-    						<form id="frm">
-							  <input type="hidden" name="productNum" value="${detail.productNum}">
-							  <button type="button" class="btn btn-success action" data-kind="u">Update</button>
-							  <button type="button" class="btn btn-dark action" data-kind="d">Delete</button>
-							 
-							</form>
-    					</div>
-    					</div>
+					<h2>${board }</h2>
+					<div class = "row col-md-8 offset-md-2">
+					<!-- 부트스트랩은 12칸을 차지함 -->
+						<table class="table table-dark table-striped">
+							<thead>
+								<tr>
+									<th>Num</th>
+									<th>Title</th>
+									<th>Writer</th>
+									<th>Date</th>
+									<th>Hit</th>
+								</tr>
+							</thead>
+							<tbody>
+							<c:forEach items="${list }" var="vo">
+							
+								<tr>
+									<td>${vo.boardNum }</td>
+									<td>
+									<c:catch>
+									<c:forEach begin="1" end="${vo.boardDepth}">--</c:forEach>
+									</c:catch>
+									<a href="./detail?boardNum=${vo.boardNum }">${vo.boardTitle }</a></td>
+									<!-- 받으려는 setter의 이름과 같게 -->
+									<td>${vo.boardWriter }</td>
+									<td>${vo.boardDate }</td>
+									<td>${vo.boardHit }</td>
+								</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+						<div>
+						<a href="./add" class="btn btn-outline-danger">글쓰기</a>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -41,7 +61,6 @@
 		<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
 		</div>
 	</div>
-	<script src="/js/product/product_detail.js"></script>
 	<c:import url="/WEB-INF/views/include/tail.jsp"></c:import>
 </body>
 </html>

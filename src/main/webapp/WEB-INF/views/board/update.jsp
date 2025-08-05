@@ -20,32 +20,23 @@
 				<c:import url="/WEB-INF/views/include/topbar.jsp"></c:import>
 				<div class="container-fluid">
 					<!-- page contents 내용 -->
-					<div class = "row col-md-8 offset-md-2">
-					<!-- 부트스트랩은 12칸을 차지함 -->
-						<table class="table table-dark table-striped">
-							<thead>
-								<tr>
-									<th>Num</th>
-									<th>Title</th>
-									<th>Writer</th>
-									<th>Date</th>
-									<th>Hit</th>
-								</tr>
-							</thead>
-							<tbody>
-							<c:forEach items="${list }" var="vo">
-							
-								<tr>
-									<td>${vo.boardNum }</td>
-									<td><a href="./detail?boardNum=${vo.boardNum }">${vo.boardTitle }</a></td>
-									<!-- 받으려는 setter의 이름과 같게 -->
-									<td>${vo.boardWriter }</td>
-									<td>${vo.boardDate }</td>
-									<td>${vo.boardHit }</td>
-								</tr>
-								</c:forEach>
-							</tbody>
-						</table>
+					<h1>Update Page</h1>
+					<div class="card">
+					  <h5 class="card-header">글작성</h5>
+					  <div class="card-body">
+					  	<form method="post">
+					 	  <label for="noticeWriter">작성자</label>
+						  <input type="text" id="boardWriter" name="boardWriter" class="form-control" required />
+						  <!-- name은 VO의 setter의 이름과 동일하게 만들어주기 -->
+					      <label for="noticeTitle">제목</label>
+						  <input type="text" id="boardTitle" name="boardTitle" class="form-control" required />
+						  <br>
+						  <label for="noticeContents">내용</label>
+						  <textarea id="boardContents" name="boardContents" required class="form-control"></textarea>
+						  <br>
+						  <button type="submit" class="btn btn-primary">수정</button>
+						 </form>
+					  </div>
 					</div>
 				</div>
 			</div>
