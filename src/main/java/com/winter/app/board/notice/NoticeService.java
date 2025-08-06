@@ -49,6 +49,7 @@ public class NoticeService implements BoardService{
 	@Override
 	public int insert(BoardVO boardVO, MultipartFile attaches) throws Exception {
 		noticeDAO.insert(boardVO);
+		// 자동증가된 boardNum을 사용
 		
 		//1. File을 HDD에 저장
 		String fileName = fileManager.fileSave(upload+board, attaches);
