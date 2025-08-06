@@ -6,24 +6,55 @@
  <!-- namespace의 이름은 사용하려는 DAO의 풀패키지명과 동일하게 작성 -->
 <mapper namespace="com.winter.app.board.notice.NoticeDAO">
 	<!-- ID는 DAO의 메서드명과 동일하게 작성 -->
+	<resultMap type="NoticeVO" id="detailResult">
+		<id column="board_num" property="boardNum"/>
+		<result column="board_title" property="boardTitle"/>
+		<result column="board_contents" property="boardContents"/>
+		<result column="board_writer" property="boardWriter"/>
+		<result column="board_date" property="boardDate"/>
+		<result column="board_hit" property="boardHit"/>
+		
+		<association property="boardFileVO" javaType="BoardFileVO">
+			<id column="file_num" property="fileNum"/>
+			<result column="ori_name" property="oriName"/>
+			<result column="save_name" property="saveName"/>
+		</association>
+	</resultMap>
 	
-	<select id="list" resultType="NoticeVO">
+	<!-- detail을 한번에 표현할때 resultMap -->
+	
+	
+	<select id="list" resultType="NoticeVO" parameterType="Pager">
 		SELECT *
 		FROM NOTICE
 		ORDER BY BOARD_NUM DESC	
+		limit #{startIndex}, #{endIndex}
+		<!-- 컴퓨터는 첫번째 숫자가 0부터임 -->
 	</select>
 	
-	<select id="detail" parameterType="NoticeVO" resultType="NoticeVO">
+	<select id="totalCount" resultType="Long">
+		SELECT COUNT(BOARD_NUM) FROM NOTICE
+	</select>
+	
+	<select id="detail" parameterType="NoticeVO" resultMap="detailResult">
 		SELECT *
 		FROM NOTICE
+			LEFT JOIN
+			NOTICEFILES F
+			USING(BOARD_NUM)
 		WHERE BOARD_NUM=#{boardNum}
 		<!-- #{} 여기에 들어갈 parameterType을 적어라 -->
 	</select>
 	
-	<insert id="insert" parameterType="NoticeVO">
+	<insert id="insert" parameterType="NoticeVO" useGeneratedKeys="true" keyProperty="boardNum">
 		INSERT INTO NOTICE(BOARD_NUM, BOARD_TITLE, BOARD_CONTENTS, BOARD_WRITER, BOARD_DATE, BOARD_HIT)
 		VALUES
 		(NULL, #{boardTitle}, #{boardContents}, #{boardWriter}, now(), 0)
+	</insert>
+	
+	<insert id="insertFile" parameterType="BoardFileVO">
+		INSERT INTO NOTICEFILES(FILE_NUM, ORI_NAME, SAVE_NAME, BOARD_NUM)
+		VALUES(NULL, #{oriName}, #{saveName}, #{boardNum})
 	</insert>
 
 	<update id="update" parameterType="NoticeVO">

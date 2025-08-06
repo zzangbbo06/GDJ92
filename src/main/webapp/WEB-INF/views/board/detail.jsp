@@ -27,6 +27,13 @@
     					<p class="card-text">${detail.boardContents }</p>
     					
     					<div>
+    						<h2>첨부파일</h2>
+    						<h4><a href="/files/${board }?fileNum=${detail.boardFileVo.saveName}">${detail.boardFileVO.oriName }</a></h4>
+    						<h4>${detail.boardFileVo.saveName }</h4>
+    						<!-- 어디 안에 있는건지 확실하게 해야함 -->
+    					</div>
+    					
+    					<div>
     						<form id="frm">
     							<input type="hidden" name="boardNum" value="${detail.boardNum}">
     						</form>

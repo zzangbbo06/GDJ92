@@ -7,10 +7,15 @@
 <mapper namespace="com.winter.app.board.qna.QnaDAO">
 	<!-- ID는 DAO의 메서드명과 동일하게 작성 -->
 	
-	<select id="list" resultType="QnaVO">
+	<select id="list" resultType="QnaVO" parameterType="pager">
 		SELECT *
 		FROM QnA
 		ORDER BY BOARD_REF DESC, BOARD_STEP ASC	
+		LIMIT #{startIndex}, #{endIndex}
+	</select>
+	
+	<select id="totalCount" resultType="Long">
+		SELECT COUNT(BOARD_NUM) FROM QnA
 	</select>
 	
 	<select id="detail" parameterType="QnaVO" resultType="QnaVO">

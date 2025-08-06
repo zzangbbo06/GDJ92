@@ -41,6 +41,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="/notice/list">Notice</a>
                         <a class="collapse-item" href="/products/list">Product</a>
+                        <a class="collapse-item" href="/qna/list">QnA</a>
                         <a class="collapse-item" href="cards.html">Cards</a>
                     </div>
                 </div>

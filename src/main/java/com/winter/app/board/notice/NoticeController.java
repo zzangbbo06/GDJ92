@@ -1,7 +1,10 @@
 package com.winter.app.board.notice;
 
 import com.winter.app.board.BoardVO;
+import com.winter.app.commons.Pager;
 import com.winter.app.home.HomeController;
+
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
@@ -13,9 +16,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping(value="/notice/*")
+@Slf4j
 public class NoticeController {
 
 	@Autowired
@@ -32,10 +37,12 @@ public class NoticeController {
 	}
 	
 	@GetMapping("list")
-	public String noticeList(Model model) throws Exception {
-		// spring을 jsp로 보내는 방법
-		List<BoardVO> list = noticeService.list();
+	public String noticeList(Pager pager,Model model) throws Exception {
 		
+		// spring을 jsp로 보내는 방법
+		List<BoardVO> list = noticeService.list(pager);
+		
+		model.addAttribute("pager",pager);
 		model.addAttribute("list", list);
 		return "board/list";
 	}
@@ -61,8 +68,9 @@ public class NoticeController {
 	 */
 	
 	@PostMapping("add")
-	public String add(NoticeVO noticeVO) throws Exception{
-		int result = noticeService.insert(noticeVO);
+	public String add(NoticeVO noticeVO, MultipartFile attaches) throws Exception{
+		
+		int result = noticeService.insert(noticeVO, attaches);
 		return "redirect:./list";
 	}
 	

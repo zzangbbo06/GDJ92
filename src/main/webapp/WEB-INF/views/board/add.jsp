@@ -24,7 +24,8 @@
 					<div class="card">
 					  <h5 class="card-header">글작성</h5>
 					  <div class="card-body">
-					  	<form method="post">
+					  	<form method="post" enctype="multipart/form-data">
+					  	<!-- 데이터를 여러개로 잘라서 보내는거를 multipart라고 함 -->
 					  	<input type="hidden" name="boardNum" value="${vo.boardNum }">
 					 	  <label for="noticeWriter">작성자</label>
 						  <input type="text" id="boardWriter" name="boardWriter" class="form-control" required value="${vo.boardWriter }"/>
@@ -35,6 +36,9 @@
 						  <label for="noticeContents">내용</label>
 						  <textarea id="boardContents" name="boardContents" required class="form-control">${vo.boardContents }</textarea>
 						  <br>
+						  <div class="mb-3">
+						  	<input type="file" class="form-control" name="attaches">
+						  </div>
 						  <button type="submit" class="btn btn-primary">작성</button>
 						  <!-- type을 버튼으로 바꾸거나 js로 막아주고 ajax, 내용이 맞는지 유효성 검사 필요 -->
 						 </form>
