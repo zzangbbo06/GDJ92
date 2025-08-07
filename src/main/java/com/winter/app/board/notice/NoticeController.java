@@ -1,5 +1,6 @@
 package com.winter.app.board.notice;
 
+import com.winter.app.board.BoardFileVO;
 import com.winter.app.board.BoardVO;
 import com.winter.app.commons.Pager;
 import com.winter.app.home.HomeController;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
@@ -68,7 +70,7 @@ public class NoticeController {
 	 */
 	
 	@PostMapping("add")
-	public String add(NoticeVO noticeVO, MultipartFile attaches) throws Exception{
+	public String add(NoticeVO noticeVO, MultipartFile[] attaches) throws Exception{
 		
 		int result = noticeService.insert(noticeVO, attaches);
 		return "redirect:./list";
@@ -106,8 +108,8 @@ public class NoticeController {
 	}
 	
 	@PostMapping("delete")
-	public String delete(Long boardNum, Model model) throws Exception {
-		int result = noticeService.delete(boardNum);
+	public String delete(BoardVO boardVO, Model model) throws Exception {
+		int result = noticeService.delete(boardVO);
 		String msg = "삭제 실패";
 		
 		if(result != 0) {
@@ -124,6 +126,24 @@ public class NoticeController {
 		
 		return "commons/result";
 	}
+	
+	@PostMapping("fileDelete")
+	@ResponseBody
+	// 응답을 바로 요청시 정한 dataType의 형식으로 내보냄
+	public List<BoardVO> fileDelete(BoardFileVO boardFileVO, Model model) throws Exception{
+		log.info("===========================");
+		log.info("========={}========", boardFileVO.getFileNum());
+		model.addAttribute("result", "hello");
+//		return "commons/ajaxResult";
+		
+		// @ResponseBody 를 사용하는 경우
+		// jsp를 안 거치고 바로 응답 (응답 형식은 요청시 정한 dataType의 형식)
+		Pager pager = new Pager();
+		List<BoardVO> list = noticeService.list(pager);
+		
+		return list;
+	}
+	
 	
 //	@GetMapping("add")
 //	public void insert() throws Exception{

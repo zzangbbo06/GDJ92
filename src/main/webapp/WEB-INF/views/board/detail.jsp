@@ -28,8 +28,10 @@
     					
     					<div>
     						<h2>첨부파일</h2>
-    						<h4><a href="/files/${board }?fileNum=${detail.boardFileVo.saveName}">${detail.boardFileVO.oriName }</a></h4>
-    						<h4>${detail.boardFileVo.saveName }</h4>
+    						<c:forEach items="${detail.boardFileVOs }" var="f">
+    						<h4><a href="/files/${board }?fileNum=${f.saveName}">${f.oriName }</a></h4>
+    						<h4>${f.saveName }</h4>
+    						</c:forEach>
     						<!-- 어디 안에 있는건지 확실하게 해야함 -->
     					</div>
     					

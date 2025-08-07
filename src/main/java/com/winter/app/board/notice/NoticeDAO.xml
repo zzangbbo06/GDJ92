@@ -6,6 +6,36 @@
  <!-- namespace의 이름은 사용하려는 DAO의 풀패키지명과 동일하게 작성 -->
 <mapper namespace="com.winter.app.board.notice.NoticeDAO">
 	<!-- ID는 DAO의 메서드명과 동일하게 작성 -->
+	<!--   	<sql id="search">
+  		<where>
+	  		<if test="kind == 'k1'">
+	  			BOARD_TITLE
+	  		</if>	
+	  		<if test="kind == 'k2'">
+	  			BOARD_CONTENTS
+	  		</if>	
+	  		<if test="kind == 'k3'">
+	  			BOARD_WRITER
+	  		</if>	
+  			LIKE CONCAT('%', #{}, '%')
+  		</where>
+  	</sql> -->
+  	<sql id="search">
+  		<where>
+	  		<choose>
+	  			<when test="kind == 'k1'">
+	  				BOARD_TITLE
+	  			</when>
+	  			<when test="kind == 'k2'">
+	  				BOARD_CONTENTS
+	  			</when>
+	  			<otherwise>
+	  				BOARD_WRITER
+	  			</otherwise>
+	  		</choose>
+	  		LIKE CONCAT('%', #{keyword}, '%')
+  		</where>
+  	</sql>
 	<resultMap type="NoticeVO" id="detailResult">
 		<id column="board_num" property="boardNum"/>
 		<result column="board_title" property="boardTitle"/>
@@ -14,11 +44,11 @@
 		<result column="board_date" property="boardDate"/>
 		<result column="board_hit" property="boardHit"/>
 		
-		<association property="boardFileVO" javaType="BoardFileVO">
+		<collection property="boardFileVOs" javaType="java.util.List" ofType="BoardFileVO">
 			<id column="file_num" property="fileNum"/>
 			<result column="ori_name" property="oriName"/>
 			<result column="save_name" property="saveName"/>
-		</association>
+		</collection>
 	</resultMap>
 	
 	<!-- detail을 한번에 표현할때 resultMap -->
@@ -27,6 +57,7 @@
 	<select id="list" resultType="NoticeVO" parameterType="Pager">
 		SELECT *
 		FROM NOTICE
+		<include refid="search"/>
 		ORDER BY BOARD_NUM DESC	
 		limit #{startIndex}, #{endIndex}
 		<!-- 컴퓨터는 첫번째 숫자가 0부터임 -->
@@ -34,6 +65,7 @@
 	
 	<select id="totalCount" resultType="Long">
 		SELECT COUNT(BOARD_NUM) FROM NOTICE
+		<include refid="search" />
 	</select>
 	
 	<select id="detail" parameterType="NoticeVO" resultMap="detailResult">
@@ -66,8 +98,14 @@
 		WHERE BOARD_NUM = #{boardNum}	
 	</update>
 	
-	<delete id="delete" parameterType="long">
+	
+	<delete id="delete" parameterType="NoticeVO">
 		DELETE FROM NOTICE
+		WHERE BOARD_NUM = #{boardNum}
+	</delete>
+	
+	<delete id="fileDelete" parameterType="NoticeVO">
+		DELETE FROM NOTICEFILES
 		WHERE BOARD_NUM = #{boardNum}
 	</delete>
 

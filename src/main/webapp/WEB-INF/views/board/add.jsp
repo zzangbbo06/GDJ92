@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
+<!-- 함수사용 태그 -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,11 +36,27 @@
 						  <input type="text" id="boardTitle" name="boardTitle" class="form-control" required value="${vo.boardTitle }"/>
 						  <br>
 						  <label for="noticeContents">내용</label>
-						  <textarea id="boardContents" name="boardContents" required class="form-control">${vo.boardContents }</textarea>
-						  <br>
-						  <div class="mb-3">
-						  	<input type="file" class="form-control" name="attaches">
+						  <textarea id="boardContents" name="boardContents" row="9" required class="form-control">${vo.boardContents }</textarea>
+						   <br>
+						  
+						   <div>
+								<button class="btn btn-primary" type="button" id="add">ADD</button>
+
+						   </div>
+						   
+						   <div>
+						   		<c:forEach items="${vo.boardFileVOs }" var="f">
+						   			<button class="deleteFile" type="button">${f.oriName }</button>
+						   			<!-- <input type="file">
+						   			--><!-- value 넣기 불가능 - READONLY이기 때문 -->
+						   		</c:forEach>
+						   </div>
+
+							<!-- fn:length(vo.boardFileVOs) -->
+						  <div id="result" data-file-count="${vo.boardFileVOs.size() }">
+							  
 						  </div>
+
 						  <button type="submit" class="btn btn-primary">작성</button>
 						  <!-- type을 버튼으로 바꾸거나 js로 막아주고 ajax, 내용이 맞는지 유효성 검사 필요 -->
 						 </form>
@@ -51,5 +69,6 @@
 		</div>
 	</div>
 	<c:import url="/WEB-INF/views/include/tail.jsp"></c:import>
+	<script type="text/javascript" src="/js/board/board_add.js"></script>
 </body>
 </html>

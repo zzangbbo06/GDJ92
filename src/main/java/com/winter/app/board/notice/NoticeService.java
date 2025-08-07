@@ -31,7 +31,7 @@ public class NoticeService implements BoardService{
 	
 	@Override
 	public List<BoardVO> list(Pager pager) throws Exception {
-		Long totalCount = noticeDAO.totalCount();
+		Long totalCount = noticeDAO.totalCount(pager);
 		pager.makeNum(totalCount);
 		return noticeDAO.list(pager);
 	}
@@ -47,34 +47,46 @@ public class NoticeService implements BoardService{
 	 */
 
 	@Override
-	public int insert(BoardVO boardVO, MultipartFile attaches) throws Exception {
-		noticeDAO.insert(boardVO);
+	public int insert(BoardVO boardVO, MultipartFile [] attaches) throws Exception {
+		int result = noticeDAO.insert(boardVO);
 		// 자동증가된 boardNum을 사용
 		
+		for(MultipartFile m: attaches) {
+			
+		
+		if(m == null || m.isEmpty()) {
+			continue;
+		}
 		//1. File을 HDD에 저장
-		String fileName = fileManager.fileSave(upload+board, attaches);
+		String fileName = fileManager.fileSave(upload+board, m);
 		
 		//2. 저장된 파일의 정보를 DB에 저장
 		BoardFileVO vo = new BoardFileVO();
-		vo.setOriName(attaches.getOriginalFilename());
+		vo.setOriName(m.getOriginalFilename());
 		vo.setSaveName(fileName);
 		vo.setBoardNum(boardVO.getBoardNum());
-		int result = noticeDAO.insertFile(vo);
-		
+		result = noticeDAO.insertFile(vo);
+		}
 		return result;
 		
 	}
 	
-
-	@Override
-	public int delete(Long boardNum) throws Exception {
-		return noticeDAO.delete(boardNum);
-	}
-
 	@Override
 	public int update(BoardVO boardVO) throws Exception {
 		return noticeDAO.update(boardVO);
 	}
+
+	@Override
+	public int delete(BoardVO boardVO) throws Exception {
+		boardVO = noticeDAO.detail(boardVO);
+		
+		for(BoardFileVO vo : boardVO.getBoardFileVOs()) {
+			fileManager.fileDelete(upload+board, vo.getSaveName());
+		}
+		int result = noticeDAO.fileDelete(boardVO);
+		return noticeDAO.delete(boardVO);
+	}
+
 
 	
 	
