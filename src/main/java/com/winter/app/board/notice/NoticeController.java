@@ -3,7 +3,7 @@ package com.winter.app.board.notice;
 import com.winter.app.board.BoardFileVO;
 import com.winter.app.board.BoardVO;
 import com.winter.app.commons.Pager;
-import com.winter.app.home.HomeController;
+
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -89,8 +89,8 @@ public class NoticeController {
 		return "board/add";
 	}
 	@PostMapping("update")
-	public String update(NoticeVO noticeVO, Model model) throws Exception{
-		int result = noticeService.update(noticeVO); //insert(noticeVO);
+	public String update(NoticeVO noticeVO, Model model, MultipartFile[] attaches) throws Exception{
+		int result = noticeService.update(noticeVO, attaches); //insert(noticeVO);
 		
 		String msg ="수정 실패";
 		
@@ -130,18 +130,10 @@ public class NoticeController {
 	@PostMapping("fileDelete")
 	@ResponseBody
 	// 응답을 바로 요청시 정한 dataType의 형식으로 내보냄
-	public List<BoardVO> fileDelete(BoardFileVO boardFileVO, Model model) throws Exception{
-		log.info("===========================");
-		log.info("========={}========", boardFileVO.getFileNum());
-		model.addAttribute("result", "hello");
-//		return "commons/ajaxResult";
+	public int fileDelete(BoardFileVO boardFileVO, MultipartFile[] attaches,Model model) throws Exception{
+		int result = noticeService.fileDelete(boardFileVO); 
 		
-		// @ResponseBody 를 사용하는 경우
-		// jsp를 안 거치고 바로 응답 (응답 형식은 요청시 정한 dataType의 형식)
-		Pager pager = new Pager();
-		List<BoardVO> list = noticeService.list(pager);
-		
-		return list;
+		return result;
 	}
 	
 	

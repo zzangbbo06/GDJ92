@@ -12,10 +12,14 @@ public interface BoardService {
 	public List<BoardVO> list(Pager pager) throws Exception;
 	
 	/* public int add(BoardVO boardVO) throws Exception; */
-	
+	//insert
 	public int insert(BoardVO boardVO, MultipartFile[] attaches) throws Exception;
+	//detail
 	public BoardVO detail(BoardVO boardVO) throws Exception;
-	
-	public int update(BoardVO boardVO) throws Exception;
+	//update
+	public int update(BoardVO boardVO, MultipartFile[] attaches) throws Exception;
+	//delete
 	public int delete(BoardVO boardVO) throws Exception;
+	//fileDelete
+	public int fileDelete(BoardFileVO boardFileVo) throws Exception;
 }

@@ -21,12 +21,7 @@
 				<div class="container-fluid">
 					<!-- page contents 내용 -->
 					<h2>${board }</h2>
-					<div class = "row col-md-8 offset-md-2">
-					<h2>${board }</h2>
-					<div class="row">
-						
-					</div>
-					
+					<div class = "row col-md-8 offset-md-2">					
 					<div>
                			<form method="get" id="searchForm">
 							<div class="input-group mb-3">

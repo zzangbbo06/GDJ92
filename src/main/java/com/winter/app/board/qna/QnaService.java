@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.winter.app.board.BoardFileVO;
 import com.winter.app.board.BoardService;
 import com.winter.app.board.BoardVO;
 import com.winter.app.commons.Pager;
@@ -17,16 +19,9 @@ public class QnaService implements BoardService{
 	
 	@Override
 	public List<BoardVO> list(Pager pager) throws Exception {
-		Long totalCount = qnaDAO.totalCount();
+		Long totalCount = qnaDAO.totalCount(pager);
 		pager.makeNum(totalCount);
 		return qnaDAO.list(pager);
-	}
-
-	@Override
-	public int insert(BoardVO boardVO) throws Exception {
-		int result = qnaDAO.insert(boardVO);
-		result = qnaDAO.refUpdate(boardVO);
-		return result;
 	}
 
 	@Override
@@ -45,15 +40,28 @@ public class QnaService implements BoardService{
 		return result;
 		
 	}
-	
+
 	@Override
-	public int delete(Long boardNum) throws Exception {
+	public int insert(BoardVO boardVO, MultipartFile[] attaches) throws Exception {
+		int result = qnaDAO.insert(boardVO);
+		result = qnaDAO.refUpdate(boardVO);
+		return result;
+	}
+
+	@Override
+	public int update(BoardVO boardVO, MultipartFile[] attaches) throws Exception {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int update(BoardVO boardVO) throws Exception {
+	public int delete(BoardVO boardVO) throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int fileDelete(BoardFileVO boardFileVo) throws Exception {
 		// TODO Auto-generated method stub
 		return 0;
 	}
