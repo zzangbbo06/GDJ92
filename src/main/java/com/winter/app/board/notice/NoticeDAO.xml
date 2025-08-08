@@ -37,17 +37,17 @@
   		</where>
   	</sql>
 	<resultMap type="NoticeVO" id="detailResult">
-		<id column="board_num" property="boardNum"/>
-		<result column="board_title" property="boardTitle"/>
-		<result column="board_contents" property="boardContents"/>
-		<result column="board_writer" property="boardWriter"/>
-		<result column="board_date" property="boardDate"/>
-		<result column="board_hit" property="boardHit"/>
+		<id column="BOARD_NUM" property="boardNum"/>
+		<result column="BOARD_TITLE" property="boardTitle"/>
+		<result column="BOARD_CONTENTS" property="boardContents"/>
+		<result column="BOARD_WRITER" property="boardWriter"/>
+		<result column="BOARD_DATE" property="boardDate"/>
+		<result column="BOARD_HIT" property="boardHit"/>
 		
 		<collection property="boardFileVOs" javaType="java.util.List" ofType="BoardFileVO">
-			<id column="file_num" property="fileNum"/>
-			<result column="ori_name" property="oriName"/>
-			<result column="save_name" property="saveName"/>
+			<id column="FIlE_NUM" property="fileNum"/>
+			<result column="ORI_NAME" property="oriName"/>
+			<result column="SAVE_NAME" property="saveName"/>
 		</collection>
 	</resultMap>
 	

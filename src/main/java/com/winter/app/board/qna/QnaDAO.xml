@@ -9,25 +9,25 @@
 	
 	<select id="list" resultType="QnaVO" parameterType="pager">
 		SELECT *
-		FROM QnA
+		FROM QNA
 		ORDER BY BOARD_REF DESC, BOARD_STEP ASC	
 		LIMIT #{startIndex}, #{endIndex}
 	</select>
 	
 	<select id="totalCount" resultType="Long">
-		SELECT COUNT(BOARD_NUM) FROM QnA
+		SELECT COUNT(BOARD_NUM) FROM QNA
 	</select>
 	
 	<select id="detail" parameterType="QnaVO" resultType="QnaVO">
 		SELECT *
-		FROM QnA
+		FROM QNA
 		WHERE BOARD_NUM=#{boardNum}
 		<!-- #{} 여기에 들어갈 parameterType을 적어라 -->
 	</select>
 	
 	<insert id="insert" parameterType="QnaVO" useGeneratedKeys="true" keyProperty="boardNum">
 	<!-- autoincrement된 값을 boardNum값에 set을  -->
-		INSERT INTO QnA(BOARD_NUM, BOARD_TITLE, BOARD_CONTENTS, BOARD_WRITER, BOARD_DATE, BOARD_HIT, BOARD_REF, BOARD_STEP, BOARD_DEPTH)
+		INSERT INTO QNA(BOARD_NUM, BOARD_TITLE, BOARD_CONTENTS, BOARD_WRITER, BOARD_DATE, BOARD_HIT, BOARD_REF, BOARD_STEP, BOARD_DEPTH)
 		VALUES
 		(NULL, #{boardTitle}, #{boardContents}, #{boardWriter}, now(), 0, #{boardRef}, #{boardStep}, #{boardDepth})
 	</insert>
@@ -37,7 +37,7 @@
 	</update>
 	
 	<update id="replyUpdate" parameterType="QnaVO">
-		UPDATE QnA SET BOARD_STEP=BOARD_STEP+1
+		UPDATE QNA SET BOARD_STEP=BOARD_STEP+1
 		WHERE BOARD_REF=#{boardRef} AND BOARD_STEP > #{boardStep}		
 	</update>
 
