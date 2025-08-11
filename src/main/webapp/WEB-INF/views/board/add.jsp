@@ -12,6 +12,8 @@
 <!-- 결과는 같지만 컴파일 시 포함되며, 코드가 현재 JSP에 복사되는것처럼 작동하고
 아래 거는 실행시 포함되며 외부에서 요청하고 그 결과를 현재 위치에 삽입 -->
 <c:import url="/WEB-INF/views/include/head_css.jsp"></c:import>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.css" rel="stylesheet">
+
 </head>
 <body id="page-top">
 	<div id="wrapper">
@@ -26,8 +28,9 @@
 					<div class="card">
 					  <h5 class="card-header">글작성</h5>
 					  <div class="card-body">
-					  	<form method="post" enctype="multipart/form-data">
+					  	<form method="post" enctype="multipart/form-data" id=frm>
 					  	<!-- 데이터를 여러개로 잘라서 보내는거를 multipart라고 함 -->
+					  	<input type="hidden" name="board" value="${board}">
 					  	<input type="hidden" name="boardNum" value="${vo.boardNum }">
 					 	  <label for="noticeWriter">작성자</label>
 						  <input type="text" id="boardWriter" name="boardWriter" class="form-control" required value="${vo.boardWriter }"/>
@@ -70,5 +73,46 @@
 	</div>
 	<c:import url="/WEB-INF/views/include/tail.jsp"></c:import>
 	<script type="text/javascript" src="/js/board/board_add.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
+	<script type="text/javascript">
+		$("#boardContents").summernote({
+			callbacks:{
+			onImageUpload: function name(files){
+				console.log("files", files);
+				let f = new FormData();
+				f.append("bf", files[0]);
+				
+				
+				fetch("./boardFile", {
+					// ./boardFile => url
+					method : "POST",
+					body:f
+				})
+				// 요청은 받는건 then
+				.then(r=>r.text())
+				.then(r=>{
+					$("#boardContents").summernote('editor.insertImage', r);
+				})
+				.catch(e => console.log(e))
+			},
+			onMediaDelete:function(files){
+			 	let f = $(files[0]).attr("src"); // root밑에 files밑에 notice /files/notice/****.jpg
+			 	
+			 	let params = new URLSearchParams();
+			 	params.append("fileName", f);
+			 	fetch("./boardFileDelete",{
+			 		method:"POST",
+			 		body:params
+			 	})
+			 	.then(r=>r.json())
+			 	.then(r=>{
+			 		console.log(r);
+			 	})
+			}
+		}
+		
+		});
+	
+	</script>
 </body>
 </html>

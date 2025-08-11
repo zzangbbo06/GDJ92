@@ -22,4 +22,11 @@ public interface BoardService {
 	public int delete(BoardVO boardVO) throws Exception;
 	//fileDelete
 	public int fileDelete(BoardFileVO boardFileVo) throws Exception;
+	
+	//fileDetail
+	public BoardFileVO fileDetail(BoardFileVO boardFileVO) throws Exception;
+	
+	public String saveFile(MultipartFile bf) throws Exception;
+	
+	public boolean deleteFile(String fileName) throws Exception;
 }

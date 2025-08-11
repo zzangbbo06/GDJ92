@@ -66,9 +66,9 @@ public class QnaController {
 		// jsp 주소
 	}
 	@PostMapping("add")
-	public String insert(QnaVO qnaVO, MultipartFile attaches) throws Exception {
+	public String insert(QnaVO qnaVO, MultipartFile[] attaches) throws Exception {
 		log.info("{}", attaches);
-//		int result = qnaService.insert(qnaVO);
+		int result = qnaService.insert(qnaVO, attaches);
 		return "redirect:/qna/list";
 	}
 	@GetMapping("update")

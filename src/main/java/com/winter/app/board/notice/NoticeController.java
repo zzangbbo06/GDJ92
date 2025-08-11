@@ -2,6 +2,7 @@ package com.winter.app.board.notice;
 
 import com.winter.app.board.BoardFileVO;
 import com.winter.app.board.BoardVO;
+import com.winter.app.commons.FileManager;
 import com.winter.app.commons.Pager;
 
 
@@ -25,12 +26,18 @@ import org.springframework.web.multipart.MultipartFile;
 @Slf4j
 public class NoticeController {
 
+    private final FileManager fileManager;
+
 	@Autowired
 	private NoticeService noticeService;
 	
 	@Value("${board.notice}")
 	// properties 안에 있는 값을 java로 가져와서 사용
 	private String name;
+
+    NoticeController(FileManager fileManager) {
+        this.fileManager = fileManager;
+    }
 	
 	@ModelAttribute("board")
 	// 모든 메소드가 실행될때 한번씩 같이 실행 
@@ -136,6 +143,26 @@ public class NoticeController {
 		return result;
 	}
 	
+	@GetMapping("fileDown")
+	public String fileDown(BoardFileVO boardFileVO, Model model) throws Exception{
+		boardFileVO = noticeService.fileDetail(boardFileVO);
+		model.addAttribute("vo", boardFileVO);
+		return "fileDownView";
+		// FileDownView로 이동
+	}
+	
+	@PostMapping("boardFile")
+	@ResponseBody
+	public String boardFile(MultipartFile bf) throws Exception{
+		//bf 이름 매핑해야 자동으로 들어감
+		return noticeService.saveFile(bf);
+	}
+	
+	@PostMapping("boardFileDelete") 
+	@ResponseBody
+	public boolean boardFileDelete(String fileName) throws Exception{
+		return noticeService.deleteFile(fileName);
+	}
 	
 //	@GetMapping("add")
 //	public void insert() throws Exception{

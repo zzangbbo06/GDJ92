@@ -29,7 +29,7 @@
     					<div>
     						<h2>첨부파일</h2>
     						<c:forEach items="${detail.boardFileVOs }" var="f">
-    						<h4><a href="/files/${board }?fileNum=${f.saveName}">${f.oriName }</a></h4>
+    						<h4><a href="./fileDown?fileNum=${f.fileNum}">${f.oriName }</a></h4>
     						<h4>${f.saveName }</h4>
     						</c:forEach>
     						<!-- 어디 안에 있는건지 확실하게 해야함 -->

@@ -6,6 +6,23 @@
  <!-- namespace의 이름은 사용하려는 DAO의 풀패키지명과 동일하게 작성 -->
 <mapper namespace="com.winter.app.board.qna.QnaDAO">
 	<!-- ID는 DAO의 메서드명과 동일하게 작성 -->
+	<resultMap type="QnaVO" id="detailResult">
+    	<id column="BOARD_NUM" property="boardNum"/>
+    	<result column="BOARD_TITLE" property="boardTitle"/>
+    	<result column="BOARD_CONTENTS" property="boardContents"/>
+    	<result column="BOARD_WRITER" property="boardWriter"/>
+	    <result column="BOARD_DATE" property="boardDate"/>
+	    <result column="BOARD_HIT" property="boardHit"/>
+   		 <result column="BOARD_REF" property="boardRef"/>
+    	<result column="BOARD_STEP" property="boardStep"/>
+    	<result column="BOARD_DEPTH" property="boardDepth"/>
+    
+   	 <collection property="boardFileVOs" javaType="java.util.List" ofType="BoardFileVO">
+       	 <id column="FILE_NUM" property="fileNum"/>
+        <result column="ORI_NAME" property="oriName"/>
+       	<result column="SAVE_NAME" property="saveName"/>
+   	 </collection>
+	</resultMap>
 	
 	<select id="list" resultType="QnaVO" parameterType="pager">
 		SELECT *
@@ -18,7 +35,7 @@
 		SELECT COUNT(BOARD_NUM) FROM QNA
 	</select>
 	
-	<select id="detail" parameterType="QnaVO" resultType="QnaVO">
+	<select id="detail" parameterType="QnaVO" resultMap="detailResult">
 		SELECT *
 		FROM QNA
 		WHERE BOARD_NUM=#{boardNum}
@@ -43,7 +60,7 @@
 
 
 	<update id="update" parameterType="QnaVO">
-		UPDATE NOTICE
+		UPDATE QNA
 		SET
 			BOARD_TITLE = #{boardTitle},
 			BOARD_CONTENTS = #{boardContents},
@@ -52,7 +69,7 @@
 	</update>
 	
 	<delete id="delete" parameterType="long">
-		DELETE FROM NOTICE
+		DELETE FROM QNA
 		WHERE BOARD_NUM = #{boardNum}
 	</delete>
 

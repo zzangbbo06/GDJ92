@@ -65,6 +65,12 @@ public class QnaService implements BoardService{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public BoardFileVO fileDetail(BoardFileVO boardFileVO) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 

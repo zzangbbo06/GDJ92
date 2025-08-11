@@ -8,8 +8,13 @@ const del = document.querySelectorAll(".del")
 const deleteFile = document.querySelectorAll(".deleteFile");
 let count = parseInt(result.getAttribute("data-file-count"));
 /*숫자로 인식을 못할수도 있기 때문에 숫자로 바꾸기*/
-
+const frm = document.querySelector("#frm");
 //-------------------------------------------------
+frm.addEventListener('submit',(e)=>{
+	const fd = new FormData(frm);
+	const board = fd.get('board');
+	frm.action = `/${board}/add`
+});
 
 deleteFile.forEach((item)=>{
 	item.addEventListener("click", function(){

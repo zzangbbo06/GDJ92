@@ -1,6 +1,8 @@
 package com.winter.app.board.notice;
 
 import java.nio.channels.MulticastChannel;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -119,7 +121,33 @@ public class NoticeService implements BoardService{
 		// 3. DB 삭제
 		return noticeDAO.fileDeleteOne(boardFileVo);
 	}
+	
+	@Override
+	public BoardFileVO fileDetail(BoardFileVO boardFileVO) throws Exception {
+		
+		return noticeDAO.fileDetail(boardFileVO);
+	}
 
+	@Override
+	public String saveFile(MultipartFile bf) throws Exception {
+		if(bf == null || bf.getSize() == 0) {
+			return null;
+		}
+		//1. File을 HDD에 저장
+		String fileName = fileManager.fileSave(upload+board, bf);
+		return "/files/"+board+"/"+fileName;
+	}
+
+	@Override
+	public boolean deleteFile(String fileName) throws Exception {
+		fileName = fileName.substring(fileName.lastIndexOf("/"));
+		
+		return fileManager.fileDelete(upload+board, fileName);
+		
+		
+	}
+	
+	
 
 	
 	
