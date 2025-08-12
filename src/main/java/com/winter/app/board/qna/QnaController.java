@@ -8,9 +8,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.winter.app.board.BoardFileVO;
 import com.winter.app.board.BoardVO;
+import com.winter.app.board.notice.NoticeVO;
 import com.winter.app.commons.Pager;
 
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/qna/*")
 @Slf4j
 public class QnaController {
-
+	
 	@Autowired
 	private QnaService qnaService;
 	
@@ -27,52 +30,112 @@ public class QnaController {
 	private String name;
 	
 	@ModelAttribute("board")
-	// 모든 메소드가 실행될때 한번씩 같이 실행 
 	public String getBoard() {
-		return "qna";
+		return name;
 	}
 	
 	@GetMapping("list")
-	public String list(Pager pager, Model model) throws Exception{
+	public String list(Pager pager, Model model)throws Exception{
 		
 		model.addAttribute("pager", pager);
 		model.addAttribute("list", qnaService.list(pager));
 		
 		return "board/list";
 	}
+	
 	@GetMapping("detail")
-	public String detail(QnaVO qnaVO, Model model) throws Exception{
-		BoardVO detail = qnaService.detail(qnaVO);
-		model.addAttribute("detail", detail);
+	public String detail(QnaVO qnaVO, Model model)throws Exception{
 		
+		model.addAttribute("vo", qnaService.detail(qnaVO));
 		return "board/detail";
 	}
+	
 	@GetMapping("reply")
-	public String reply(QnaVO qnaVO, Model model) throws Exception{
+	public String reply(QnaVO qnaVO, Model model)throws Exception{
 		model.addAttribute("vo", qnaVO);
-		return "board/add";
 		
+		return "board/add";
 	}
+	
 	@PostMapping("reply")
-	public String reply2(QnaVO qnaVO, Model model) throws Exception{
+	public String reply(QnaVO qnaVO)throws Exception{
+		
 		int result = qnaService.reply(qnaVO);
+		
 		return "redirect:./list";
 	}
-	// qna/add
-	@GetMapping("add")
 	
-	public String insert(QnaVO qnaVO) throws Exception{
+	@GetMapping("add")
+	public String insert()throws Exception{
 		return "board/add";
-		// jsp 주소
 	}
+	
 	@PostMapping("add")
-	public String insert(QnaVO qnaVO, MultipartFile[] attaches) throws Exception {
-		log.info("{}", attaches);
+	public String insert(QnaVO qnaVO, MultipartFile [] attaches)throws Exception{
+		
 		int result = qnaService.insert(qnaVO, attaches);
-		return "redirect:/qna/list";
+		return "redirect:./list";
 	}
 	@GetMapping("update")
-	public String update(QnaVO qnaVO) throws Exception{
-		return "board/update";
+	public String update(BoardVO noticeVO, Model model)throws Exception{
+		BoardVO boardVO = qnaService.detail(noticeVO);
+		model.addAttribute("vo", boardVO);
+		
+		return "board/add";
 	}
+	
+	@PostMapping("update")
+	public String update(NoticeVO noticeVO,MultipartFile [] attaches, Model model)throws Exception{
+		int result = qnaService.update(noticeVO, attaches);
+		
+		String msg = "수정 실패";
+		
+		if(result>0) {
+			msg="수정 성공";
+		}
+		
+		String url="./detail?boardNum="+noticeVO.getBoardNum();
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "commons/result";//"redirect:./detail?boardNum="+noticeVO.getBoardNum();
+	}
+	
+	@PostMapping("delete")
+	public String delete(NoticeVO noticeVO, Model model)throws Exception{
+		int result = qnaService.delete(noticeVO);
+		String msg = "삭제 실패";
+		
+		if(result>0) {
+			msg="삭제 성공";
+		}
+		
+		String url="./list";
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "commons/result";
+		
+	}
+	
+	
+	@PostMapping("fileDelete")
+	@ResponseBody
+	public int fileDelete(BoardFileVO boardFileVO, Model model)throws Exception{
+		int result = qnaService.fileDelete(boardFileVO);
+		
+		return result;
+	}
+	
+	@GetMapping("fileDown")
+	public String fileDown(BoardFileVO boardFileVO, Model model)throws Exception{
+		boardFileVO = qnaService.fileDetail(boardFileVO);
+		
+		model.addAttribute("vo", boardFileVO);
+		
+		return "fileDownView";
+	}
+
 }

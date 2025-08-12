@@ -6,18 +6,17 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-
 import com.winter.app.commons.FileManager;
-import com.winter.app.transaction.Transaction;
 
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class MemberService {
-
 	@Autowired
-	private MembersDAO membersDAO;
-//	private BoardDAO noticeDAO; -> 가능
+	private MemberDAO memberDAO;
+	
 	@Autowired
 	private FileManager fileManager;
 	
@@ -27,36 +26,41 @@ public class MemberService {
 	@Value("${board.member}")
 	private String board;
 	
-	@Autowired
-	private Transaction transaction;
-	
-	public int join(MembersVO membersVO, MultipartFile profile) throws Exception{
+	public MemberVO login(MemberVO memberVO) throws Exception{
+		MemberVO checkVO = memberDAO.login(memberVO);
+
 		
-		int result = membersDAO.join(membersVO);
+		if(checkVO != null && memberVO.getPassword().equals(checkVO.getPassword())){
+			
+			return checkVO;
+		}
+		
+		return null;
+	}
+	
+	public int join(MemberVO memberVO, MultipartFile profile) throws Exception{
+		int result = memberDAO.join(memberVO);
 		
 		ProfileVO profileVO = new ProfileVO();
-		profileVO.setUsername(membersVO.getUsername());
+		profileVO.setUsername(memberVO.getUsername());
 		profileVO.setSaveName("default.jpg");
 		profileVO.setOriName("default.jpg");
 		if(profile != null && !profile.isEmpty()) {
-			String saveName = fileManager.fileSave(upload + board, profile);
 			profileVO.setSaveName(fileManager.fileSave(upload+board, profile));
 			profileVO.setOriName(profile.getOriginalFilename());
-			
-			if(profile != null) {
-				throw new Exception();
-			}
 		}
 		
-		result = membersDAO.profileInsert(profileVO);
+		result = memberDAO.profileInsert(profileVO);
 		
 		Map<String, Object> map = new HashMap<>();
-		map.put("username", membersVO.getUsername());
+		map.put("username", memberVO.getUsername());
 		map.put("roleNum", 3);
 		
-		result = membersDAO.addRole(map);
+		result = memberDAO.addRole(map);
+				
 		
 		return result;
-		
 	}
+
+
 }

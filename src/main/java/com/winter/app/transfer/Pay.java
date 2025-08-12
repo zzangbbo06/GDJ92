@@ -8,7 +8,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
 
-import com.winter.app.members.MembersVO;
+import com.winter.app.members.MemberVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,9 +24,9 @@ public class Pay {
 		log.info("{}", joinPoint.getArgs());
 		log.info("target {}", joinPoint.getTarget());
 		log.info("kind : {}", joinPoint.getKind());
-		MembersVO memberVO = new MembersVO();
+		MemberVO memberVO = new MemberVO();
 		memberVO.setUsername("123");
-		MembersVO [] members = new MembersVO[1];
+		MemberVO [] members = new MemberVO[1];
 		members[0]=memberVO;
 		
 		Object obj = joinPoint.proceed(members);
