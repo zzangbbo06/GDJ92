@@ -59,7 +59,8 @@ add.addEventListener("click", ()=>{
   		alert("최대 5개까지만 추가할 수 있습니다.")
   		return;
   	}
-  	count++;				  
+  	count++;
+					  
 	let div = document.createElement("div"); //<div></div>
 	div.classList.add("mb-3")				 //<div class="mb-3"></div>
 	
