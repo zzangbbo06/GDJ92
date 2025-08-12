@@ -2,6 +2,7 @@ package com.winter.app.members;
 
 
 import java.time.LocalDate;
+import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -21,4 +22,6 @@ public class MembersVO {
 	private LocalDate birth;
 	
 	private ProfileVO profile;
+	
+	private List<RoleVO> roleVOs;
 }

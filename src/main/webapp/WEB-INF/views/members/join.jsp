@@ -1,83 +1,128 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>    
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원가입</title>
+<title>Insert title here</title>
+<%@ include file="/WEB-INF/views/include/head_css.jsp"%>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.css" rel="stylesheet">
+
 </head>
-<link href="<c:url value='/vendor/fontawesome-free/css/all.min.css'/>" rel="stylesheet" type="text/css">
-<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-      rel="stylesheet">
-<link href="<c:url value='/css/sb-admin-2.min.css'/>" rel="stylesheet">
-<body class="bg-gradient-primary">
+<body id="page-top">
+	<div id="wrapper">
+		<c:import url="/WEB-INF/views/include/sidebar.jsp"></c:import>
 
-    <div class="container">
+		<!-- Start  -->
+		<div id="content-wrapper" class="d-flex flex-column">
+			<div id="content">
+				<c:import url="/WEB-INF/views/include/topbar.jsp"></c:import>
+				<div class="container-fluid">
+					<!-- page contents 내용 -->
+					<div class="row justify-content-center ">
+						<div class="col-md-8">
+							<form  method="post" enctype="multipart/form-data">
+								<div class="mb-3">
+									<label for="username" class="form-label">ID</label> 
+									<input type="text" class="form-control" name="username"
+										id="username" aria-describedby="writerHelp">
+								</div>
+								<div class="mb-3">
+									<label for="password" class="form-label">PASSWORD</label> 
+									<input type="password" class="form-control" name="password"
+										id="password" aria-describedby="passwordHelp">
+								</div>		
+								<div class="mb-3">
+									<label for="passwordCheck" class="form-label">PASSWORD</label> 
+									<input type="password" class="form-control" name="passwordCheck"
+										id="passwordCheck" aria-describedby="passwordCheckHelp">
+								</div>																
+								<div class="mb-3">
+									<label for="name" class="form-label">NAME</label> 
+									<input type="text" class="form-control" name="name"
+										id="name" aria-describedby="nameHelp">
+								</div>
+								<div class="mb-3">
+									<label for="email" class="form-label">EMAIL</label> 
+									<input type="email" class="form-control" name="email"
+										id="email" aria-describedby="emailHelp">
+								</div>		
+								<div class="mb-3">
+									<label for="phone" class="form-label">PHONE</label> 
+									<input type="text" class="form-control" name="phone"
+										id="phone" aria-describedby="phoneHelp">
+								</div>	
+								
+								<div>																						<div class="mb-3">
+								<label for="birth" class="form-label">BIRTH</label> 
+									<input type="date" class="form-control" name="birth"
+										id="birth" aria-describedby="birthHelp">
+								</div>
+								<div>	
+								<label for="profile" class="form-label">PROFILE</label> 
+									<input type="file" class="form-control" name="profile"
+										id="profile">
+								</div>									
+								
 
-        <div class="card o-hidden border-0 shadow-lg my-5">
-            <div class="card-body p-0">
-                <!-- Nested Row within Card Body -->
-                <div class="row">
-                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
-                    <div class="col-lg-7">
-                        <div class="p-5">
-                            <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
-                            </div>
-                            <form id="registerForm" method="post" action="/member/join" enctype="multipart/form-data">
-							  <div class="form-group row">
-							    <div class="col-sm-6 mb-3 mb-sm-0">
-							      <input type="text" class="form-control form-control-user" id="firstName" name="firstName" placeholder="First Name">
-							    </div>
-							    <div class="col-sm-6">
-							      <input type="text" class="form-control form-control-user" id="lastName" name="lastName" placeholder="Last Name">
-							    </div>
-							  </div>
 							
-							  <input type="hidden" name="username" id="username">
-							
-							  <div class="form-group">
-							    <input type="email" class="form-control form-control-user" name="email" id="email" placeholder="Email Address">
-							  </div>
-							
-							  <div class="form-group row">
-							    <div class="col-sm-6 mb-3 mb-sm-0">
-							      <input type="password" name="password" class="form-control form-control-user" id="password" placeholder="Password">
-							    </div>
-							    <div class="col-sm-6">
-							      <input type="password" name="passwordConfirm" class="form-control form-control-user" id="passwordConfirm" placeholder="Repeat Password">
-							    </div>
-							  </div>
-							
-							  <!-- 프로필 파일 받으려면 추가 -->
-							  <input type="file" name="profile" class="form-control">
-							
-							  <button type="submit" class="btn btn-primary btn-user btn-block">Register Account</button>
+
+								<button type="submit" class="btn btn-primary">Submit</button>
 							</form>
-                            <hr>
-                            <div class="text-center">
-                                <a class="small" href="forgot-password.html">Forgot Password?</a>
-                            </div>
-                            <div class="text-center">
-                                <a class="small" href="login.html">Already have an account? Login!</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+						</div>
+					</div>
 
-    </div>
-    <!-- Bootstrap core JavaScript-->
-    <script src="<c:url value='/vendor/jquery/jquery.min.js'/>"></script>
-    <script src="<c:url value='/vendor/bootstrap/js/bootstrap.bundle.min.js'/>"></script>
+				</div>
+			</div>
+			<!--  End Content  -->
+			<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
+		</div>
 
-    <!-- Core plugin JavaScript-->
-    <script src="<c:url value='/vendor/jquery-easing/jquery.easing.min.js'/>"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="<c:url value='/js/sb-admin-2.min.js'/>"></script>
-    <script type="text/javascript" src="/js/members/member_id.js"></script>
+	</div>
+	<c:import url="/WEB-INF/views/include/tail.jsp"></c:import>
+	<script type="text/javascript" src ="/js/board/board_add.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
+	<script type="text/javascript">
+	$("#contents").summernote({
+		callbacks:{
+			onImageUpload: function (files) {
+				console.log("files: ", files[0]);
+				let f = new FormData();
+				f.append("bf", files[0])
+				
+				fetch("./boardFile",{
+					method:"POST",
+					body:f
+				})
+				.then(r=>r.text())
+				.then(r=>{
+					$("#contents").summernote('editor.insertImage', r);
+				})
+				.catch(e => console.log(e))
+				
+				;
+			},
+			onMediaDelete: function(files){
+				let f = $(files[0]).attr("src"); // /files/notice/****.jpg
+				
+				let params = new URLSearchParams();
+				params.append("fileName", f);
+				fetch("./boardFileDelete", {
+					method:"POST",
+					body:params
+				})
+				.then(r=>r.json())
+				.then(r=>{
+					console.log(r)
+				})
+				
+			}
+		}
+		
+	})
+	</script>
 </body>
 </html>

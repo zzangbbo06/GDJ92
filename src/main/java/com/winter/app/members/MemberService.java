@@ -1,5 +1,8 @@
 package com.winter.app.members;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -47,6 +50,11 @@ public class MemberService {
 		
 		result = membersDAO.profileInsert(profileVO);
 		
+		Map<String, Object> map = new HashMap<>();
+		map.put("username", membersVO.getUsername());
+		map.put("roleNum", 3);
+		
+		result = membersDAO.addRole(map);
 		
 		return result;
 		
