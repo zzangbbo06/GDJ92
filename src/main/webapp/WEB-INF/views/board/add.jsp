@@ -79,7 +79,7 @@
 			callbacks:{
 			onImageUpload: function name(files){
 				console.log("files", files);
-				let f = new FormData();
+				let f = new FormData(); //<form></form>
 				f.append("bf", files[0]);
 				
 				
