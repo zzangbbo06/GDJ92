@@ -18,7 +18,7 @@ import com.winter.app.commons.FileManager;
 import com.winter.app.commons.Pager;
 
 @Service
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class NoticeService implements BoardService{
 
 	@Autowired
@@ -50,7 +50,7 @@ public class NoticeService implements BoardService{
 	 * return noticeDAO.add(boardVO); }
 	 */
 	
-	@Transactional
+	
 	@Override
 	public int insert(BoardVO boardVO, MultipartFile [] attaches) throws Exception {
 		int result = noticeDAO.insert(boardVO);
