@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- DAO 풀패키지명과 동일 -->
+<mapper namespace="com.winter.app.members.MembersDAO">
+
+  <!-- 멤버 + 프로필 조인 조회용 -->
+  <resultMap id="MemberWithProfileMap" type="com.winter.app.members.MembersVO">
+    <id column="USERNAME" property="username"/>
+    <result column="PASSWORD" property="password"/>
+    <result column="NAME"     property="name"/>
+    <result column="EMAIL"    property="email"/>
+    <result column="PHONE"    property="phone"/>
+    <result column="BIRTH"    property="birth"/>
+
+    <association property="profile" javaType="com.winter.app.members.ProfileVO">
+      <id column="P_USERNAME" property="username"/>
+      <result column="ORI_NAME"   property="oriName"/>
+      <result column="SAVE_NAME"  property="saveName"/>
+    </association>
+  </resultMap>
+
+  <!-- 회원 가입 -->
+  <insert id="join" parameterType="MembersVO">
+    INSERT INTO MEMBERS (USERNAME, PASSWORD, EMAIL)
+    VALUES (#{username}, #{password},  #{email})
+  </insert>
+
+  <!-- 프로필 저장 -->
+  <insert id="profileInsert" parameterType="ProfileVO">
+    INSERT INTO MEMBER_PROFILE (USERNAME, ORI_NAME, SAVE_NAME)
+    VALUES (#{username}, #{oriName}, #{saveName})
+  </insert>
+</mapper>
