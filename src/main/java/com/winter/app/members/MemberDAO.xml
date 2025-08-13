@@ -55,6 +55,34 @@
   		INSERT INTO MEMBER_ROLE (USERNAME, ROLE_NUM)
   		VALUES (#{username}, (SELECT ROLE_NUM FROM ROLE WHERE ROLE_NAME='ROLE_MEMBER'))
   	</insert>
+  	
+  	<insert id="cartAdd" parameterType="Map">
+  		INSERT INTO CART VALUES(#{username}, #{productNum})
+  	</insert>
   		
+  	<select id="cartList" parameterType="MemberVO"  resultType="com.winter.app.products.ProductVO">
+  		<!-- SELECT * 
+  		FROM CART C
+  		JOIN PRODUCTS P ON P.PRODUCT_NUM = C.PRODUCT_NUM
+  		WHERE C.USERNAME = #{username}
+  		ORDER BY p.PRODUCT_DATE DESC -->
+  		<!-- SELECT *
+  		FROM CART C
+  			INNER JOIN
+  			PRODUCTS P
+  			USING(PRODUCT_NUM)
+  			WHERE C.USERNAME = #{username} -->
+  			
+  		SELECT *
+  		FROM PRODUCTS
+  			INNER JOIN
+  			PRODUCTS_KIND k
+  			USING(KIND_NUM)
+  		WHERE
+  			PRODUCT_NUM IN(
+  				SELECT PRODUCT_NUM FROM CART
+  				WHERE USERNAME = #{username}
+  			)
+  	</select>	
   </mapper>
   

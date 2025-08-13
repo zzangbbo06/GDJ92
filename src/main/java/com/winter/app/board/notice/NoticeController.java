@@ -4,8 +4,9 @@ import com.winter.app.board.BoardFileVO;
 import com.winter.app.board.BoardVO;
 import com.winter.app.commons.FileManager;
 import com.winter.app.commons.Pager;
+import com.winter.app.members.MemberVO;
 
-
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -47,6 +48,7 @@ public class NoticeController {
 	
 	@GetMapping("list")
 	public String noticeList(Pager pager,Model model) throws Exception {
+
 		
 		// spring을 jsp로 보내는 방법
 		List<BoardVO> list = noticeService.list(pager);
@@ -65,7 +67,9 @@ public class NoticeController {
 	}
 	@GetMapping("add")
 	public String add() throws Exception{
+		
 		return "board/add";
+		
 	}
 	
 	/*
@@ -77,8 +81,10 @@ public class NoticeController {
 	 */
 	
 	@PostMapping("add")
-	public String add(NoticeVO noticeVO, MultipartFile[] attaches) throws Exception{
-		
+	public String add(NoticeVO noticeVO, MultipartFile[] attaches, HttpSession session) throws Exception{
+		MemberVO memberVO = (MemberVO)session.getAttribute("member");
+		noticeVO.setBoardWriter(memberVO.getName());
+		// 이 부분에 따라 무엇이 들어가는지 정해줄수있음
 		int result = noticeService.insert(noticeVO, attaches);
 		return "redirect:./list";
 	}

@@ -94,7 +94,7 @@
 		SET
 			BOARD_TITLE = #{boardTitle},
 			BOARD_CONTENTS = #{boardContents},
-			BOARD_WRITER = #{boardWriter}
+			<!-- BOARD_WRITER = #{boardWriter} -->
 		WHERE BOARD_NUM = #{boardNum}	
 	</update>
 	

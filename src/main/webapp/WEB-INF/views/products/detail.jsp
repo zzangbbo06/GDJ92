@@ -22,9 +22,9 @@
 					<!-- page contents 내용 -->
 					<div class="card w-75 mb-3 offset-md-2">
 						<div class="card-body">
-						<h5 class="card-title">Name: ${detail.boardName }</h5>
-    					<p class="card-text">Contents: ${detail.boardContents }</p>
-    					<p>Ref: ${detail.boardRef }</p>
+						<h5 class="card-title">Name: ${detail.productName }</h5>
+    					<p class="card-text">Contents: ${detail.productContents }</p>
+    				
     					<div>
     						<form id="frm">
 							  <input type="hidden" name="productNum" value="${detail.productNum}">
@@ -32,6 +32,10 @@
 							  <button type="button" class="btn btn-dark action" data-kind="d">Delete</button>
 							 
 							</form>
+    					</div>
+    					
+    					<div>
+    						<button class="btn btn-primary" id="cartAdd" data-product-num="${detail.productNum }">장바구니</button>
     					</div>
     					</div>
 					</div>

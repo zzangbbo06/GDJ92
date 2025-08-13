@@ -1,5 +1,8 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>	
+<!-- Topbar -->
 <nav
 	class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
@@ -23,7 +26,7 @@
 			</div>
 		</div>
 	</form>
-
+<c:if test="${not empty member}">
 	<!-- Topbar Navbar -->
 	<ul class="navbar-nav ml-auto">
 
@@ -49,7 +52,8 @@
 					</div>
 				</form>
 			</div></li>
-
+		
+		
 		<!-- Nav Item - Alerts -->
 		<li class="nav-item dropdown no-arrow mx-1"><a
 			class="nav-link dropdown-toggle" href="#" id="alertsDropdown"
@@ -160,22 +164,20 @@
 		<div class="topbar-divider d-none d-sm-block"></div>
 
 		<!-- Nav Item - User Information -->
-		<li class="nav-item dropdown no-arrow">
-		<a
+		<li class="nav-item dropdown no-arrow"><a
 			class="nav-link dropdown-toggle" href="#" id="userDropdown"
 			role="button" data-toggle="dropdown" aria-haspopup="true"
 			aria-expanded="false"> <span
-				class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas
-					McGee</span> <img class="img-profile rounded-circle"
-				src="img/undraw_profile.svg">
+				class="mr-2 d-none d-lg-inline text-gray-600 small">${member.name }</span> <img class="img-profile rounded-circle"
+				src="/files/member/${member.profileVO.saveName }">
 		</a> <!-- Dropdown - User Information -->
 			<div
 				class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
 				aria-labelledby="userDropdown">
-				<a class="dropdown-item" href="#"> <i
+				<a class="dropdown-item" href="/member/detail"> <i
 					class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Profile
-				</a> <a class="dropdown-item" href="#"> <i
-					class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i> Settings
+				</a> <a class="dropdown-item" href="/member/cartList"> <i
+					class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i> 장바구니
 				</a> <a class="dropdown-item" href="#"> <i
 					class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> Activity
 					Log
@@ -189,6 +191,17 @@
 			</div></li>
 
 	</ul>
+</c:if>
 
+<c:if test="${empty member}">
+	<ul class="navbar-nav ml-auto">
+	<li class="nav-item mx-2">
+		<a href="/member/login">Login</a>
+	</li>	
+	
+		<li class="nav-item dropdown no-arrow mx-2"><a href="/member/join">Join</a></li>
+	</ul>
+
+</c:if>
 </nav>
 <!-- End of Topbar -->

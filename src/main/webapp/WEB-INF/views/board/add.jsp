@@ -32,8 +32,10 @@
 					  	<!-- 데이터를 여러개로 잘라서 보내는거를 multipart라고 함 -->
 					  	<input type="hidden" name="board" value="${board}">
 					  	<input type="hidden" name="boardNum" value="${vo.boardNum }">
+					  	<div>
 					 	  <label for="noticeWriter">작성자</label>
-						  <input type="text" id="boardWriter" name="boardWriter" class="form-control" required value="${vo.boardWriter }"/>
+						  	<span>${member.name }</span>
+						  </div>
 						  <!-- name은 VO의 setter의 이름과 동일하게 만들어주기 -->
 					      <label for="noticeTitle">제목</label>
 						  <input type="text" id="boardTitle" name="boardTitle" class="form-control" required value="${vo.boardTitle }"/>
