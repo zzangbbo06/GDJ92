@@ -6,7 +6,7 @@ const actions1 = document.getElementsByClassName("action");
 const actions2 = document.querySelectorAll(".action");
 const frm = document.getElementById("frm");
 const cartAdd = document.getElementById("cartAdd");
-const checkAll = document.getElementById("checkAll");
+/*const checkAll = document.getElementById("checkAll");
 
 checkAll.addEventListener("change",(e)=>{
 	const chs = document.querySelectorAll(".ch");
@@ -14,7 +14,7 @@ checkAll.addEventListener("change",(e)=>{
 		ch.checked = e.target.checked;
 	}
 	
-})
+})*/
 
 for (let a of actions1) {
   a.addEventListener("click", function (e) {

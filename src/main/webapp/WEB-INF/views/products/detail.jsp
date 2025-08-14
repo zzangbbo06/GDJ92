@@ -1,51 +1,46 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<%-- <%@ include file="/WEB-INF/views/include/head_css.jsp" %> --%>
-<!-- 결과는 같지만 컴파일 시 포함되며, 코드가 현재 JSP에 복사되는것처럼 작동하고
-아래 거는 실행시 포함되며 외부에서 요청하고 그 결과를 현재 위치에 삽입 -->
-<c:import url="/WEB-INF/views/include/head_css.jsp"></c:import>
+<%@ include file="/WEB-INF/views/include/head_css.jsp" %>
 </head>
 <body id="page-top">
 	<div id="wrapper">
 		<c:import url="/WEB-INF/views/include/sidebar.jsp"></c:import>
 		
+		<!-- Start  -->
 		<div id="content-wrapper" class="d-flex flex-column">
 			<div id="content">
 				<c:import url="/WEB-INF/views/include/topbar.jsp"></c:import>
 				<div class="container-fluid">
 					<!-- page contents 내용 -->
-					<div class="card w-75 mb-3 offset-md-2">
-						<div class="card-body">
-						<h5 class="card-title">Name: ${detail.productName }</h5>
-    					<p class="card-text">Contents: ${detail.productContents }</p>
-    				
-    					<div>
-    						<form id="frm">
-							  <input type="hidden" name="productNum" value="${detail.productNum}">
-							  <button type="button" class="btn btn-success action" data-kind="u">Update</button>
-							  <button type="button" class="btn btn-dark action" data-kind="d">Delete</button>
-							 
-							</form>
-    					</div>
-    					
-    					<div>
-    						<button class="btn btn-primary" id="cartAdd" data-product-num="${detail.productNum }">장바구니</button>
-    					</div>
-    					</div>
+					<h1>Product Detail</h1>
+					<h2>Name : ${vo.productName}</h2>
+					<h2>Contents : ${vo.productContents}</h2>
+					<h2>Rate : ${vo.productRate}</h2>
+					<h2>Kind : ${vo.kindNum}</h2>
+					<h2>kindName : ${vo.productKindVO.kindName}</h2>
+					
+					<div>
+						<form action="./delete" method="post">
+							<input type="hidden" name="productNum" value="${vo.productNum}">
+							<a class="btn btn-success" href="./update?productNum=${vo.productNum}">Update	</a>
+							<button class="btn btn-danger">Delete</button>
+						</form>
 					</div>
 				</div>
 			</div>
-			<!-- End Content -->
-		<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
+			<!--  End Content  -->
+			<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
 		</div>
+		
+		
 	</div>
-	<script src="/js/product/product_detail.js"></script>
 	<c:import url="/WEB-INF/views/include/tail.jsp"></c:import>
+	
 </body>
 </html>

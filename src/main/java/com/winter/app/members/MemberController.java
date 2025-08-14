@@ -94,4 +94,11 @@ public class MemberController {
         return "member/cartList"; 
     }
 	
+	@PostMapping("cartDelete")
+	public String cartDelete(Long [] productNum, HttpSession session) throws Exception{		
+		MemberVO login = (MemberVO)session.getAttribute("member");
+		int cartDelete = memberService.cartDelete(productNum, login);
+		return "redirect:./cartList";
+	}
+	
 }

@@ -36,12 +36,13 @@
 								</tr>
 							</thead>
 							<tbody>
+							<form action="./cartDelete" method="POST" id="frm">
 							<c:forEach items="${cart }" var="vo">
 							
 								<tr>
 									 <td>
 										<div class="form-check">
-										  <input class="form-check-input ch" type="checkbox" value="${vo.productNum }" >								  
+										  <input class="form-check-input ch" type="checkbox" name = "productNum" value="${vo.productNum }" >								  
 										</div>
 									</td> 
 									
@@ -51,8 +52,11 @@
 									<td>${vo.productKindVO.kindName }</td>
 								</tr>
 								</c:forEach>
+								</form>
 							</tbody>
 						</table>
+						<button class="btn btn-dark action" data-kind="d" id="del">Delete</button>
+						<button class="btn btn-success" data-kind="d" id="add">ADD</button>
 					</div>
 				</div>
 			</div>
@@ -64,5 +68,6 @@
 		</div>
 	</div>
 	<c:import url="/WEB-INF/views/include/tail.jsp"></c:import>
+	<script type="text/javascript" src ="/js/cart/cartList.js"></script>
 </body>
 </html>

@@ -84,5 +84,20 @@
   				WHERE USERNAME = #{username}
   			)
   	</select>	
+  	
+  	<delete id="cartDelete" parameterType="java.util.Map">
+  		DELETE FROM CART
+  		
+  		<where>
+  			USERNAME=#{username}
+  			AND
+  			PRODUCT_NUM IN
+  			<foreach collection="list" item="item" open="(" close=")" separator=",">
+  			<!-- item 아무렇게나 해도된다 -->
+  				#{item}
+  			</foreach>
+  		</where>
+  		
+  	</delete>
   </mapper>
   
